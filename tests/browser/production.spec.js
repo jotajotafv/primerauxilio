@@ -21,6 +21,10 @@ test('Producción: subdirectorio, 20 GLB, recorrido, persistencia y móvil', asy
     await expect(page.locator('#scene-loader')).toBeHidden();
     await expect(page.locator('canvas')).toBeVisible();
   };
+  const settleCamera = () => page.evaluate(async () => {
+    // Wait for rendered frames, including the directed camera transition.
+    for (let frame = 0; frame < 60; frame++) await new Promise(resolve => requestAnimationFrame(resolve));
+  });
   try {
     const response = await page.goto(baseURL);
     expect(response.status()).toBe(200);
@@ -34,6 +38,8 @@ test('Producción: subdirectorio, 20 GLB, recorrido, persistencia y móvil', asy
     await page.getByRole('link', { name: 'COMENZAR ENTRENAMIENTO' }).click();
     await loaded();
     await expect(page.locator('.module-row')).toHaveCount(7);
+    await settleCamera();
+    await page.screenshot({ path: test.info().outputPath('hub-desktop.png'), fullPage: true });
     for (const id of ['intro', 'cpr', 'heimlich', 'bleeding', 'burns', 'fractures', 'kit']) {
       await page.goto(`${baseURL}#module/${id}`);
       await loaded();
@@ -44,14 +50,14 @@ test('Producción: subdirectorio, 20 GLB, recorrido, persistencia y móvil', asy
         await expect(page.locator('#scene-title')).toContainText('Pierna');
       }
     }
-    for (const filename of Object.values(ASSETS)) {
+    await Promise.all(Object.values(ASSETS).map(async filename => {
       const response = await request.get(new URL(`models/${filename}`, baseURL).href);
       expect(response.status(), filename).toBe(200);
       const bytes = await response.body();
       expect(bytes.subarray(0, 4).toString(), filename).toBe('glTF');
       const hash = data => crypto.createHash('sha256').update(data).digest('hex');
       expect(hash(bytes), filename).toBe(hash(fs.readFileSync(`public/models/${filename}`)));
-    }
+    }));
     await page.goto(`${baseURL}#module/intro`); await loaded();
     await page.getByRole('button', { name: 'Ver demostración', exact: true }).click();
     for (let index = 0; index < 5; index++) await page.locator('[data-action="demo-next"]').click();
@@ -66,6 +72,8 @@ test('Producción: subdirectorio, 20 GLB, recorrido, persistencia y móvil', asy
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto(`${baseURL}#module/burns`); await loaded();
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBeTruthy();
+    await settleCamera();
+    await page.screenshot({ path: test.info().outputPath('burns-mobile.png'), fullPage: true });
     expect(await page.evaluate(() => window.firstAidDebug)).toBeUndefined();
     expect(errors).toEqual([]);
     await test.info().attach('production-verification.json', {

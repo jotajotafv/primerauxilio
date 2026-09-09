@@ -4,6 +4,8 @@ Aplicación educativa de primeros auxilios para adultos, ejecutada en el navegad
 
 Stack: Three.js, WebGL, Vite y JavaScript. Playwright se utiliza exclusivamente para las pruebas.
 
+**Aplicación pública:** [Abrir First Aid 3D Experience](https://jotajotafv.github.io/primerauxilio/).
+
 ## Ejecutar
 
 Requiere Node.js 20.19+ o 22.12+ y un navegador con WebGL 2.

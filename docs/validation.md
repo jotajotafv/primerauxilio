@@ -26,3 +26,12 @@ Fecha: 9 de septiembre de 2026.
 El entorno restringido bloqueó inicialmente la lectura de configuración de Vite dentro de la prueba de producción. La misma prueba terminó correctamente al ejecutarse con el permiso de proceso correspondiente; no fue un fallo de la aplicación.
 
 Las capturas están en `test-results/`. La medición de recursos comprueba estabilidad en los recorridos probados, no descarta cualquier fuga posible. El render por software de las pruebas no permite prometer 60 FPS en dispositivos reales. No se ha medido capacidad clínica ni se ha utilizado un sensor físico.
+
+## Despliegue público
+
+- Repositorio: [jotajotafv/primerauxilio](https://github.com/jotajotafv/primerauxilio), rama `main`, con los 20 GLB originales versionados.
+- Sitio confirmado por la API de Pages: [First Aid 3D Experience](https://jotajotafv.github.io/primerauxilio/).
+- GitHub Pages utiliza `build_type: workflow`; [el workflow](https://github.com/jotajotafv/primerauxilio/actions/workflows/deploy.yml) instala con `npm ci`, ejecuta tests, compila y verifica `dist/` antes de publicarlo. Build y despliegue completados correctamente en GitHub.
+- Prueba pública con `PLAYWRIGHT_BASE_URL` y `npm run test:deployed`: HTTP 200 de la página, scripts, CSS, favicon y los 20 GLB. Los archivos descargados tienen cabecera GLB válida y SHA-256 idéntico a cada original local.
+- Recorrido público: landing, botón de entrada, sala, siete módulos, variantes de pierna, una práctica completa y progreso conservado tras recargar. Vista móvil de 390 × 844 sin desbordamiento horizontal. Ningún error JavaScript, de consola, HTTP o de descarga durante la prueba.
+- Las capturas y el informe JSON del smoke test se guardan en `test-results/`, excluido de Git. La grabación continua de trazas es opcional: compite con SwiftShader y provocó tiempos de espera en este equipo. Los ocho casos locales pasaron con capturas y sin grabación continua.
