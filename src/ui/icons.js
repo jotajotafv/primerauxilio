@@ -1,0 +1,22 @@
+const paths = {
+  plus: '<path d="M12 4v16M4 12h16"/>',
+  arrow: '<path d="M4 12h16m-6-6 6 6-6 6"/>',
+  back: '<path d="M20 12H4m6-6-6 6 6 6"/>',
+  check: '<path d="m5 12 4 4L19 6"/>',
+  home: '<path d="m3 10 9-7 9 7v11H3Zm6 11v-8h6v8"/>',
+  scan: '<path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5M8 12h8m-4-4v8"/>',
+  pulse: '<path d="M2 12h5l3-8 4 16 3-8h5"/>',
+  airway: '<path d="M9 3h6v9l6 7-4 2-5-6-5 6-4-2 6-7Z"/>',
+  drop: '<path d="M12 3C9 7 5 11 5 15a7 7 0 0 0 14 0c0-4-4-8-7-12Z"/>',
+  heat: '<path d="M12 3c3 5-3 5 0 10m-5-6c-4 6 2 5 0 10m10-10c-3 5 3 5 0 10M4 21h16"/>',
+  bone: '<path d="M5 8a3 3 0 1 1 3-3l8 8a3 3 0 1 1 3 6 3 3 0 1 1-6-3Z"/>',
+  kit: '<rect x="3" y="7" width="18" height="14" rx="2"/><path d="M8 7V3h8v4m-4 4v6m-3-3h6"/>',
+  clock: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+  orbit: '<ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(-35 12 12)"/><path d="m18 3 3 1-1 3"/><circle cx="12" cy="12" r="2"/>',
+  reset: '<path d="M3 10a9 9 0 1 1 2 8M3 4v6h6"/>',
+  info: '<circle cx="12" cy="12" r="9"/><path d="M12 11v6m0-10v1"/>',
+  close: '<path d="m6 6 12 12M6 18 18 6"/>',
+  play: '<path d="m8 4 12 8-12 8Z"/>',
+  menu: '<path d="M4 6h16M4 12h16M4 18h16"/>',
+};
+export const icon = (name, className = '') => `<svg class="icon ${className}" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${paths[name] || paths.plus}</svg>`;
